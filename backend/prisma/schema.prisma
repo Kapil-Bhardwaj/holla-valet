@@ -1,0 +1,101 @@
+// Holla Valet - database schema
+// SQLite for now; swapping to Postgres later only means changing
+// `provider` + `url` below, Prisma handles the rest.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// You (platform admin) - not tied to any hotel.
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Vendor {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+
+  hotels Hotel[]
+}
+
+model Hotel {
+  id        String   @id @default(cuid())
+  vendorId  String
+  vendor    Vendor   @relation(fields: [vendorId], references: [id])
+  name      String
+  address   String?
+  createdAt DateTime @default(now())
+
+  managers ManagerUser[]
+  qrCodes  QRCode[]
+}
+
+model ManagerUser {
+  id           String   @id @default(cuid())
+  hotelId      String
+  hotel        Hotel    @relation(fields: [hotelId], references: [id])
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+// SQLite has no native enum type, so QR/Ticket status are plain strings,
+// validated in application code against the values listed here:
+//   QRCode.status:  "ASSIGNED_FREE" | "ASSIGNED_LOCKED" | "DISABLED"
+//   Ticket.status:  "CHECKED_IN" | "REQUESTED" | "COMPLETED"
+// Moving to Postgres later lets these become real enums with zero data loss.
+
+model QRCode {
+  id               String   @id @default(cuid())
+  code             String   @unique // random, unguessable, encoded in the printed QR
+  hotelId          String
+  hotel            Hotel    @relation(fields: [hotelId], references: [id])
+  hotelLocalNumber Int // human-friendly "Tag #7", sequential per hotel
+  status           String   @default("ASSIGNED_FREE")
+  createdAt        DateTime @default(now())
+
+  tickets Ticket[]
+
+  @@unique([hotelId, hotelLocalNumber])
+}
+
+model Ticket {
+  id            String    @id @default(cuid())
+  qrCodeId      String
+  qrCode        QRCode    @relation(fields: [qrCodeId], references: [id])
+  customerPhone String
+  status        String    @default("CHECKED_IN")
+  checkedInAt   DateTime  @default(now())
+  requestedAt   DateTime?
+  completedAt   DateTime?
+}
+
+// WhatsApp retries webhook deliveries that don't get acknowledged fast
+// enough, which means the same inbound message can arrive more than once.
+// This table dedupes by WhatsApp's own message id (the "wamid") so a retry
+// can't double-create a ticket or double-process a button tap. SQLite
+// instead of Redis (the Meta sample app uses Redis for this) - one less
+// moving part, and this scale doesn't need a separate cache service.
+model ProcessedWebhookMessage {
+  id          String   @id // WhatsApp's message id (wamid)
+  processedAt DateTime @default(now())
+}
+
+// Any scan or inbound WhatsApp message that didn't match a valid,
+// free QR code - kept for audit / fraud visibility, never becomes a Ticket.
+model InvalidScanLog {
+  id        String   @id @default(cuid())
+  rawCode   String? // whatever code (if any) we could extract
+  reason    String // e.g. "code_not_found", "code_locked"
+  source    String // "qr_redirect" | "whatsapp_webhook"
+  createdAt DateTime @default(now())
+}
