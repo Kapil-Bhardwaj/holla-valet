@@ -5,16 +5,16 @@ import 'screens/login_screen.dart';
 import 'theme.dart';
 
 void main() {
-  runApp(const HollaHotelApp());
+  runApp(const RedValetHotelApp());
 }
 
-class HollaHotelApp extends StatelessWidget {
-  const HollaHotelApp({super.key});
+class RedValetHotelApp extends StatelessWidget {
+  const RedValetHotelApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Holla Valet Dashboard',
+      title: 'RedValet Dashboard',
       debugShowCheckedModeBanner: false,
       theme: buildHotelTheme(),
       home: const _SessionGate(),

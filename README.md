@@ -1,4 +1,4 @@
-# Holla Valet
+# RedValet
 
 WhatsApp-based valet ticketing for hotels, pubs, clubs etc.
 
@@ -42,7 +42,7 @@ WhatsApp-based valet ticketing for hotels, pubs, clubs etc.
   state machine, WhatsApp webhook, login.
 - `frontend-admin/` — Flutter app for you: add vendors/hotels, assign QR
   batches, export printable tags, view invalid-scan logs.
-- `frontend-hola-hotel/` — Flutter app for a hotel's valet manager: live
+- `frontend-hotel/` — Flutter app for a hotel's valet manager: live
   ticket board, "Car Arrived" button, this hotel's QR inventory.
 
 ## Data model
@@ -119,7 +119,7 @@ flutter pub get
 flutter run -d chrome
 
 # Valet manager app
-cd frontend-hola-hotel
+cd frontend-hotel
 flutter pub get
 flutter run -d chrome
 ```

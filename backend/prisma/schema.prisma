@@ -1,4 +1,4 @@
-// Holla Valet - database schema
+// RedValet - database schema
 // SQLite for now; swapping to Postgres later only means changing
 // `provider` + `url` below, Prisma handles the rest.
 

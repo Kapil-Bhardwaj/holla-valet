@@ -16,7 +16,7 @@ assertRequiredEnvVars();
 const app = express();
 
 // FRONTEND_ORIGINS: comma-separated list of allowed origins for the Flutter
-// web apps (e.g. "http://localhost:5000,https://admin.holla-valet.com").
+// web apps (e.g. "http://localhost:5000,https://admin.redvalet.com").
 // Every protected route still requires a bearer token the browser doesn't
 // auto-attach, so a permissive dev default here isn't a login bypass - but
 // set this explicitly once deployed (Stage 3) rather than leaving it open.
@@ -60,7 +60,7 @@ app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
 
 const port = process.env.PORT ?? 3000;
 app.listen(port, () => {
-  console.log(`Holla backend listening on port ${port}`);
+  console.log(`RedValet backend listening on port ${port}`);
 });
 
 // Last-resort safety net - logs instead of letting Node kill the whole

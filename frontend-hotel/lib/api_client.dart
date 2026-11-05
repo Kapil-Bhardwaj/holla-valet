@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Change this when you move past local dev (Stage 3: your real domain).
 const String kApiBaseUrl = 'http://localhost:3000';
 
-const _tokenStorageKey = 'holla_hotel_token';
+const _tokenStorageKey = 'redvalet_hotel_token';
 
 class ApiException implements Exception {
   final String message;

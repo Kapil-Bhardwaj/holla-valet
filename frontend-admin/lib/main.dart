@@ -5,16 +5,16 @@ import 'screens/vendors_screen.dart';
 import 'theme.dart';
 
 void main() {
-  runApp(const HollaAdminApp());
+  runApp(const RedValetAdminApp());
 }
 
-class HollaAdminApp extends StatelessWidget {
-  const HollaAdminApp({super.key});
+class RedValetAdminApp extends StatelessWidget {
+  const RedValetAdminApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Holla Admin',
+      title: 'RedValet Admin',
       debugShowCheckedModeBanner: false,
       theme: buildAdminTheme(),
       home: const _SessionGate(),

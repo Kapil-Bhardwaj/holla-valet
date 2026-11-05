@@ -1,11 +1,11 @@
 {
-    "name": "holla_admin",
-    "short_name": "holla_admin",
+    "name": "RedValet Admin",
+    "short_name": "RedValet",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "RedValet admin panel - vendors, hotels and QR tags.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

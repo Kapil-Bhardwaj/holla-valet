@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text('🚗', style: TextStyle(fontSize: 48)),
                   const SizedBox(height: 8),
                   const Text(
-                    'Holla Valet',
+                    'RedValet',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
                   ),
                   const SizedBox(height: 4),

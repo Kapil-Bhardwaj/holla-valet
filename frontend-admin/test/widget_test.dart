@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:holla_admin/main.dart';
+import 'package:redvalet_admin/main.dart';
 
 void main() {
   testWidgets('Login screen shows email and password fields', (WidgetTester tester) async {
@@ -9,7 +9,7 @@ void main() {
     // not the brief loading spinner _SessionGate shows while checking.
     SharedPreferences.setMockInitialValues({});
 
-    await tester.pumpWidget(const HollaAdminApp());
+    await tester.pumpWidget(const RedValetAdminApp());
     await tester.pumpAndSettle();
 
     expect(find.text('Email'), findsOneWidget);
