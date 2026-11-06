@@ -2,8 +2,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Change this when you move past local dev (Stage 3: your real domain).
-const String kApiBaseUrl = 'http://localhost:3000';
+/// Defaults to local dev. Production builds override this at build time:
+///   flutter build web --dart-define=API_BASE_URL=https://api.redvalet.in
+const String kApiBaseUrl = String.fromEnvironment(
+  'API_BASE_URL',
+  defaultValue: 'http://localhost:3000',
+);
 
 const _tokenStorageKey = 'redvalet_admin_token';
 
